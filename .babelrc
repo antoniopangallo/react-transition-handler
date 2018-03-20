@@ -1,0 +1,3 @@
+{
+  "presets": ["./build_config/babel-preset.js"]
+}

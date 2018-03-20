@@ -1,0 +1,78 @@
+{
+  "name": "react-transition-handler",
+  "version": "1.0.0",
+  "description": "It is a tiny React library for managing transition between Components, Redux Connected Components or React-Router v4",
+  "main": "./build/index.js",
+  "module": "./build/es/index.js",
+  "repository": "antoniopangallo/react-transition-handler",
+  "scripts": {
+    "build": "node ./build_config/build.js",
+    "prepare": "npm run build",
+    "lint": "eslint --ext .jsx --ext .js src __tests__ --fix",
+    "pretest": "npm run lint",
+    "test": "jest -u",
+    "test:watch": "npm run test -- --watch --coverage"
+  },
+  "author": "Antonio Pangallo",
+  "files": [
+    "build/index.css",
+    "build/index.js",
+    "build/index.es.js",
+    "build/es",
+    "build/umd"
+  ],
+  "keywords": [
+    "transition",
+    "transition-handler",
+    "transition-replace",
+    "react-transition",
+    "router-transition",
+    "react-component"
+  ],
+  "jest": {
+    "testMatch": [
+      "**/?(*.)(spec|test).js?(x)"
+    ]
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=15"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-jest": "^22.0.3",
+    "babel-plugin-annotate-pure-calls": "^0.2.1",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.12",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "child_process": "^1.0.2",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.13.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-watch": "^3.1.3",
+    "fs": "0.0.1-security",
+    "gzip-size": "^4.1.0",
+    "jest": "^22.0.3",
+    "prettier": "^1.9.2",
+    "pretty-bytes": "^4.0.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
+    "rollup": "^0.57.1",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-copy": "^0.2.3",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-uglify-es": "0.0.1"
+  }
+}
