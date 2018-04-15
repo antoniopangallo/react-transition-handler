@@ -1,0 +1,58 @@
+html, body, #main-wrapper, .target, .child {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+#main-wrapper, .wrapper  {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.target, .transition-replace {
+    position: relative;    
+    display: flex;
+    flex: 1;   
+}
+.child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.child1 {
+    background-color: red;
+}
+
+.child2 {
+    background-color: blue;
+}
+
+.child3 {
+    background-color: #40c58e;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    padding: 4px 0;
+    margin: 0;
+}
+
+ul li {
+    background-color: turquoise;
+    border-radius: 4px;
+    margin: 0 14px;
+    padding: 4px 20px;
+    cursor: pointer;
+    font-size: 20px;
+    box-sizing: border-box;
+}

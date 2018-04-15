@@ -1,0 +1,163 @@
+<!--
+The MIT License (MIT) Copyright © 2018-present Antonio Pangallo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>React Transition Handler • How to use it</title>
+    <link rel="stylesheet" href="./build/index.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="main-wrapper">
+      <div class="target" id="transition-carousel"></div>
+      <div class="target" id="transition-opacity"></div>
+    </div>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-sham.min.js"></script>
+    <script src="./build/umd/index.min.js"></script>
+    <script type="text/babel">
+      'use strict';
+      const {
+        TransitionReplace,
+        Switch
+      } = ReactTransitionHandler;
+
+      class SimpleExampleCarousel extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { switchState: Switch.create("switchState") };
+          this.onChange = switchState => {
+              this.setState({ switchState });
+          };
+          this.onHistory = history => (this.switchHistory = history);
+          this._handlClick = this._handlClick.bind(this);
+        }
+
+        _handlClick(event) {
+          event.preventDefault();
+          const { tag } = event.target.dataset
+          this.switchHistory.push(tag, child => {
+            console.log("Child:", child, " Transition Completed");
+          })
+        }
+        render() {
+          const { switchState } = this.state;
+          // In order to get the key you must use the getKey static method
+          // provided by the Switch component
+          const key = Switch.getKey(switchState);
+          return (
+            <div className="wrapper">
+              <ul onClick={this._handlClick}> 
+                <li data-tag="child1">Child 1</li>
+                <li data-tag="child2">Child 2</li>
+                <li data-tag="child3">Child 3</li>
+              </ul>
+              <TransitionReplace
+                classNameWrapper="transition-replace"
+                className="swap-transition">
+                <Switch
+                    switchState={switchState}
+                    onChange={this.onChange}
+                    onHistory={this.onHistory}
+                    key={key}
+                >
+                    <Child className="child child1" tag="child1" />
+                    <Child className="child child2" tag="child2" />
+                    <Child className="child child3" tag="child3" />
+                </Switch>
+              </TransitionReplace>
+            </div>
+          )
+        }
+      }
+
+      class SimpleExampleOpacity extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { switchState: Switch.create("switchState") };
+          this.onChange = switchState => {
+              this.setState({ switchState });
+          };
+          this.onHistory = history => (this.switchHistory = history);
+          this._handlClick = this._handlClick.bind(this);
+        }
+
+        _handlClick(event) {
+          event.preventDefault();
+          const { tag } = event.target.dataset
+          this.switchHistory.push(tag, child => {
+            console.log("Child:", child, " Transition Completed");
+          })
+        }
+        render() {
+          const { switchState } = this.state;
+          // In order to get the key you must use the getKey static method
+          // provided by the Switch component
+          const key = Switch.getKey(switchState);
+          return (
+            <div className="wrapper">
+              <ul onClick={this._handlClick}> 
+                <li data-tag="child1">Child 1</li>
+                <li data-tag="child2">Child 2</li>
+                <li data-tag="child3">Child 3</li>
+              </ul>
+              <TransitionReplace
+                classNameWrapper="transition-replace"
+                className="opacity-transition">
+                <Switch
+                    switchState={switchState}
+                    onChange={this.onChange}
+                    onHistory={this.onHistory}
+                    key={key}
+                >
+                    <Child className="child child1" tag="child1" />
+                    <Child className="child child2" tag="child2" />
+                    <Child className="child child3" tag="child3" />
+                </Switch>
+              </TransitionReplace>
+            </div>
+          )
+        }
+      }
+
+      class Child extends React.Component {
+        componentWillLeave() {
+          console.log(this.props.className, "is Leaving");
+        }
+        componentWillEnter() {
+          console.log(this.props.className, "is Entering");
+        }
+        componentDidLeave() {
+          console.log(this.props.className, "has Left");
+        }
+        componentDidEnter() {
+          console.log(this.props.className, "has Entered");
+        }
+
+        render() {
+            return <div className={this.props.className}> {this.props.tag} </div>
+        }
+      }
+
+      ReactDOM.render(
+        <SimpleExampleCarousel />,
+        document.getElementById('transition-carousel')
+      );
+
+      ReactDOM.render(
+        <SimpleExampleOpacity />,
+        document.getElementById('transition-opacity')
+      );
+    </script>
+  </body>
+</html>
