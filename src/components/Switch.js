@@ -142,8 +142,8 @@ export default class Switch extends Component {
     });
   }
 
-  _isStateless(Component) {
-    return typeof Component !== "string" && !Component.type.prototype.render;
+  _isStateless({ type }) {
+    return typeof type !== "string" && !type.prototype.render;
   }
 
   render() {

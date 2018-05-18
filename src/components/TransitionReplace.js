@@ -66,16 +66,6 @@ export default class TransitionReplace extends React.Component {
       typeof this.nextSwitch._onlifeCycle === "function" &&
         this.nextSwitch._onlifeCycle(LIFECYCLE.componentWillEnter);
 
-      const dir =
-        typeof this.nextSwitch._getDir === "function"
-          ? this.nextSwitch._getDir()
-          : 1;
-      this.curretElement.setAttribute("data-dir", dir);
-      this.nextElement.setAttribute("data-dir", dir);
-
-      this.curretElement.setAttribute("data-transition", "start");
-      this.nextElement.setAttribute("data-transition", "start");
-
       this._callEvents("onLeaving", this.currentSwitch, this.curretElement);
       this._callEvents("onEntering", this.nextSwitch, this.nextElement);
 
@@ -140,7 +130,6 @@ export default class TransitionReplace extends React.Component {
     const fn = event => {
       event.preventDefault();
       if (element === event.target) {
-        element.setAttribute("data-transition", "end");
         typeof switchElm._onlifeCycle === "function" &&
           switchElm._onlifeCycle(lifecycle);
         if (lifecycle === LIFECYCLE.componentDidLeave)
@@ -154,6 +143,20 @@ export default class TransitionReplace extends React.Component {
     return fn;
   }
 
+  _getDir() {
+    const { current, next } = this.state;
+    let dir = 0;
+    if (next !== null && next.key) {
+      const currentKeys = current.key.split(".");
+      const nextKeys = next.key.split(".");
+      const index = currentKeys.findIndex(
+        (elm, index) => nextKeys[index] !== elm
+      );
+      dir = nextKeys[index] > currentKeys[index] ? 1 : -1;
+    }
+    return dir;
+  }
+
   render() {
     const { current, next } = this.state;
     const className =
@@ -165,9 +168,14 @@ export default class TransitionReplace extends React.Component {
     const style = this.props.classNameWrapper
       ? { ...this.props.style }
       : { ...styles.wrapper, ...this.props.style };
+    const dir = this._getDir();
+    const dataTransition = next !== null ? "start" : "end";
+
     return (
       <div className={this.props.classNameWrapper} style={style}>
         <span
+          data-transition={dataTransition}
+          data-dir={dir}
           key={current.key}
           ref={this.curretElementFN}
           className={classNameCurrent}
@@ -176,6 +184,8 @@ export default class TransitionReplace extends React.Component {
         </span>
         {next !== null && (
           <span
+            data-transition={dataTransition}
+            data-dir={dir}
             key={next.key}
             ref={this.nextElementFN}
             className={`${className} ${className}-enter-from`}
