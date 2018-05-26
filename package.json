@@ -1,6 +1,6 @@
 {
   "name": "react-transition-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "It is a tiny React library for managing transition between Components, Redux Connected Components or React-Router v4",
   "main": "./build/index.js",
   "module": "./build/es/index.js",

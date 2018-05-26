@@ -81,7 +81,7 @@ export default class Switch extends Component {
   _goBack(callback) {
     const newPos = this.props.switchState.key - 1;
     const key = newPos >= 0 ? newPos : this._length - 1;
-    this._onSwitchChange(key, 1, callback);
+    this._onSwitchChange(key, -1, callback);
   }
 
   _goForward(callback) {
@@ -142,8 +142,8 @@ export default class Switch extends Component {
     });
   }
 
-  _isStateless(Component) {
-    return typeof Component !== "string" && !Component.type.prototype.render;
+  _isStateless({ type }) {
+    return typeof type !== "string" && !type.prototype.render;
   }
 
   render() {
